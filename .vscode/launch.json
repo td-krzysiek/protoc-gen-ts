@@ -1,30 +1,30 @@
 {
-    // !!! To enable debugger: add --inspect argument to `node` in file `bin/protoc-gen-ts` !!!
-    //      It should look like this
-    //          #!/usr/bin/node --inspect
-    //          require('../src/index')
-    //
-    // change "./test/*.proto" below to not run all tests.
     "version": "0.2.0",
+    "inputs": [
+        {
+            "id": "protos",
+            "type": "command",
+            
+        }
+    ],
     "configurations": [
         {
             "type": "node",
-            "runtimeExecutable": "/usr/bin/protoc",
             "request": "launch",
             "name": "Debug protoc-gen-ts tests",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
-            "program": "--plugin=protoc-gen-ts=./bin/protoc-gen-ts",
+            "protocol": "inspector",
+            "runtimeExecutable": "protoc",
+            "sourceMaps": true,
             "autoAttachChildProcesses": true,
             "outputCapture": "std",
             "args": [
-                "--ts_out=${workspaceFolder}/test",
-                "./test/*.proto"
+                "--plugin=protoc-gen-ts=./.vscode/debug",
+                "--ts_out=./test",
+                "./test/**/*.proto"
             ],
-            "cwd": "${workspaceFolder}",
+            "cwd": "${fileWorkspaceFolder}",
             "outFiles": [
-                "${workspaceFolder}/**/*.js"
+                "${fileWorkspaceFolder}/**/*.js"
             ]
         }
     ]
